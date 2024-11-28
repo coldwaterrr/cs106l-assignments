@@ -1,130 +1,120 @@
-# CS106L Assignments 
+# CS106L 作业
 
-This repository contains starter code for Stanford CS106L, a course on Standard C++ programming.
+这个仓库包含了斯坦福大学 CS106L 课程的起始代码，这是一个关于标准 C++ 编程的课程。
 
-## Getting Started
+## 开始之前
 
-Before getting started, a few prerequisites:
+在开始之前，有一些先决条件：
 
-* You will need [Python 3.8](https://www.python.org/downloads/) or higher on your computer. You can check by running `python3 --version` (`python --version` on Windows) in a terminal.
-* You will need an IDE you can code in. We encourage you to use VSCode for this class ([see guide below](#vscode-setup-instructions)), but you may use any IDE that you can comfortably write and compile C++ code in.
-* You will need [Git](https://git-scm.com/). If you are using VSCode, you should already have this. You can check by running `git --version` in a terminal.
+* 你需要在你的电脑上安装 [Python 3.8](https://www.python.org/downloads/) 或更高版本。你可以通过在终端中运行 `python3 --version`（在 Windows 上运行 `python --version`）来检查。
+* 你需要一个可以编写代码的 IDE。我们鼓励你在这门课中使用 VSCode（[参见下面的指南](#vscode-setup-instructions)），但你可以使用任何你能舒适地编写和编译 C++ 代码的 IDE。
+* 你需要 [Git](https://git-scm.com/)。如果你使用 VSCode，你应该已经有了这个工具。你可以通过在终端中运行 `git --version` 来检查。
 
-Next, download the starter code. Open up a terminal (if you are using VSCode, hit <kbd>Ctrl+\`</kbd> or go to **Terminal > New Terminal** at the top) and run the following command:
+接下来，下载起始代码。打开一个终端（如果你使用 VSCode，按 <kbd>Ctrl+\`</kbd> 或者在顶部选择 **Terminal > New Terminal**）并运行以下命令：
 
 ```sh
 git clone https://github.com/cs106l/cs106l-assignments.git
 ```
 
-which will download the starter code into a folder `cs106l-assignments`. If you are using VSCode, you can then open up a VSCode workspace dedicated to CS106L:
+这将会把起始代码下载到一个名为 `cs106l-assignments` 的文件夹中。如果你使用 VSCode，你可以然后打开一个专门用于 CS106L 的 VSCode 工作区：
 
 ```sh
 cd cs106l-assignments && code .
 ```
 
-and you are ready to go!
+然后你就可以开始了！
 
-### Fetching assignments
+### 获取作业
 
-As we update existing assignments and release new ones, we will push updates to this repository. To fetch a new assignment, open up a terminal to your `cs106l-assignments` directory and run
+当我们更新现有作业并发布新作业时，我们会将更新推送到这个仓库。要获取新作业，请打开一个终端到你的 `cs106l-assignments` 目录并运行
 
 ```sh
 git pull origin main
 ```
 
-You should now have the latest starter code!
+你现在应该有最新的起始代码了！
 
-## VSCode Setup Instructions
+## VSCode 设置说明
 
-We recommend using VSCode to write C++ code for this class. See instructions below to setup VSCode/GCC for your machine.
+我们推荐使用 VSCode 来编写这门课的 C++ 代码。请参见下面的说明来为你的机器设置 VSCode/GCC。
 
 ### Mac
 
-#### Step One: Installing VSCode
+#### 第一步：安装 VSCode
 
-Go to [this link](https://code.visualstudio.com/docs/setup/mac)
-and download Visual Studio Code for Mac. Follow the instructions on this webpage under the
-section **Installation**.
+访问 [这个链接](https://code.visualstudio.com/docs/setup/mac) 并下载适用于 Mac 的 Visual Studio Code。按照该网页下 **Installation** 部分的说明进行操作。
 
-Inside VSCode, head to the extensions tab <img src="docs/vscode-extensions.png" display="inline" height="20px"></img> and search for **C/C++**. Click on the **C/C++** extension, and then click **Install**.
+在 VSCode 中，前往扩展标签 <img src="docs/vscode-extensions.png" display="inline" height="20px"></img> 并搜索 **C/C++**。点击 **C/C++** 扩展，然后点击 **Install**。
 
-<b> 🥳 At this point you should successfully have VSCode on your Mac 👏 </b>
+<b> 🥳 此时你应该已经成功在你的 Mac 上安装了 VSCode 👏 </b>
 
-#### Step Two: Installing a C++ Compiler
+#### 第二步：安装 C++ 编译器
 
 <ol>
   <li>
-    Check if you have Homebrew by running 
+    通过运行以下命令检查你是否有 Homebrew
     <pre lang="sh">brew --version</pre>
-    If you get something like
+    如果你得到类似
     <pre lang="sh">
 brew --version
 Homebrew 4.2.21</pre>
-    then <b>skip step 2 and go to step 3.</b> If you get anything else that looks sus then proceed to step 2!
+    的输出，那么 <b>跳过第 2 步并进入第 3 步。</b> 如果你得到其他看起来可疑的输出，请继续第 2 步！
   </li>
   <li>
-    Run this command:
+    运行以下命令：
     <pre lang="sh">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
-    which is going to download Homebrew🍺 which is a package manager. Woot woot.
+    这将会下载 Homebrew🍺，这是一个包管理器。Woot woot。
   </li>
   <li>
-    Run the following command:
+    运行以下命令：
     <pre lang="sh">brew install gcc</pre>
-    which is going to install the compiler (GCC).
+    这将会安装编译器（GCC）。
   </li>
   <li>
-    Make note of which GCC version Homebrew installs. In most cases, this will be <code>g++-14</code>. 
-    By default, the <code>g++</code> command on Mac is an alias to the built-in <code>clang</code> compiler. We can fix this by running <pre lang="sh">echo 'alias g++="g++-14"' >> ~/.zshrc</pre> to make <code>g++</code> point to the version of GCC we just installed. Change <code>g++-14</code> in the above command to whichever version of GCC you installed.
+    记下 Homebrew 安装的 GCC 版本。在大多数情况下，这将是 <code>g++-14</code>。默认情况下，Mac 上的 <code>g++</code> 命令是内置 <code>clang</code> 编译器的别名。我们可以通过运行 <pre lang="sh">echo 'alias g++="g++-14"' >> ~/.zshrc</pre> 来修复这个问题，使 <code>g++</code> 指向我们刚刚安装的 GCC 版本。在上述命令中将 <code>g++-14</code> 更改为你安装的 GCC 版本。
   <li>
-    Restart your terminal and verify that everything worked by running the following command:
+    重启你的终端并通过运行以下命令验证一切是否正常：
     <pre lang="sh">g++ --version</pre>
   </li>
 </ol>
 
 ### Linux
 
-These instructions are for Debian-based distributions, like Ubuntu. Tested on Ubuntu 20.04 LTS.
+这些说明适用于基于 Debian 的发行版，如 Ubuntu。在 Ubuntu 20.04 LTS 上测试。
 
-#### Step One: Installing VSCode
+#### 第一步：安装 VSCode
 
-Go to [this link](https://code.visualstudio.com/docs/setup/linux)
-and download Visual Studio Code for Linux. Follow the instructions on this webpage under the section **Installation**.
+访问 [这个链接](https://code.visualstudio.com/docs/setup/linux) 并下载适用于 Linux 的 Visual Studio Code。按照该网页下 **Installation** 部分的说明进行操作。
 
-Inside VSCode, head to the extensions tab <img src="docs/vscode-extensions.png" display="inline" height="20px"></img> and search for **C/C++**. Click on the **C/C++** extension, and then click **Install**.
+在 VSCode 中，前往扩展标签 <img src="docs/vscode-extensions.png" display="inline" height="20px"></img> 并搜索 **C/C++**。点击 **C/C++** 扩展，然后点击 **Install**。
 
-<b> 🥳 At this point you should successfully have VSCode on your Linux machine 👏 </b>
+<b> 🥳 此时你应该已经成功在你的 Linux 机器上安装了 VSCode 👏 </b>
 
-#### Step Two: Installing a C++ Compiler
+#### 第二步：安装 C++ 编译器
 
 <ol>
-  <li>In a terminal, update the Ubuntu package lists by running <pre lang="sh">sudo apt-get update</pre></li>
-  <li>Next install the G++ compiler: <pre lang="sh">sudo apt-get install g++-10</pre></li>
-  <li>By default, the system version of G++ will be used. To change it to the version you just installed, you can configure Linux to use G++ version 10 or a higher version installed like so: <pre lang="sh">sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10</pre></li>
-  <li>Restart your terminal and verify that GCC was installed correctly. You must have a GCC version of 10 or higher: <pre lang="sh">g++ --version</pre></li>
+  <li>在终端中，通过运行以下命令更新 Ubuntu 包列表 <pre lang="sh">sudo apt-get update</pre></li>
+  <li>接下来安装 G++ 编译器： <pre lang="sh">sudo apt-get install g++-10</pre></li>
+  <li>默认情况下，将使用系统版本的 G++。要将其更改为你刚刚安装的版本，你可以配置 Linux 使用 G++ 版本 10 或更高版本，如下所示： <pre lang="sh">sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10</pre></li>
+  <li>重启你的终端并验证 GCC 是否正确安装。你必须有 10 或更高版本的 GCC： <pre lang="sh">g++ --version</pre></li>
 </ol>
-
 
 ### Windows
 
-#### Step One: Installing VSCode
+#### 第一步：安装 VSCode
 
-Go to [this link](https://code.visualstudio.com/docs/setup/windows)
-and download Visual Studio Code for Windows. Follow the instructions on this webpage under the
-section **Installation**.
+访问 [这个链接](https://code.visualstudio.com/docs/setup/windows) 并下载适用于 Windows 的 Visual Studio Code。按照该网页下 **Installation** 部分的说明进行操作。
 
-Inside VSCode, head to the extensions tab <img src="docs/vscode-extensions.png" display="inline" height="20px"></img> and search for **C/C++**. Click on the **C/C++** extension, and then click **Install**.
+在 VSCode 中，前往扩展标签 <img src="docs/vscode-extensions.png" display="inline" height="20px"></img> 并搜索 **C/C++**。点击 **C/C++** 扩展，然后点击 **Install**。
 
-<b> 🥳 At this point you should successfully have VSCode on your PC 👏 </b>
+<b> 🥳 此时你应该已经成功在你的 PC 上安装了 VSCode 👏 </b>
 
-#### Step Two: Installing a C++ Compiler
+#### 第二步：安装 C++ 编译器
 
-1. Follow the instructions at [this link](https://code.visualstudio.com/docs/cpp/config-mingw)
-    * You should be doing the instructions under **Installing the
-MinGW-w64 toolchain.**
+1. 按照 [这个链接](https://code.visualstudio.com/docs/cpp/config-mingw) 的说明进行操作
+    * 你应该按照 **Installing the MinGW-w64 toolchain** 部分的说明进行操作。
 
-2. After fully following the instructions under **Installing the
-MinGW-w64 toolchain** you should now be able to verify
-everything worked by running the following command:
+2. 完全按照 **Installing the MinGW-w64 toolchain** 部分的说明操作后，你现在应该可以通过运行以下命令验证一切是否正常：
 
 ```sh
 g++ --version
