@@ -23,11 +23,12 @@ const std::string COURSES_NOT_OFFERED_PATH = "student_output/courses_not_offered
  * Represents a course a student can take in ExploreCourses.
  * You must fill in the types of the fields in this struct.
  * Hint: Remember what types C++ streams work with?!
+ * 回想一下 C++ 流（streams）通常处理的数据类型。
  */
 struct Course {
-  /* STUDENT TODO */ title;
-  /* STUDENT TODO */ number_of_units;
-  /* STUDENT TODO */ quarter;
+  /* STUDENT TODO */std::string title;
+  /* STUDENT TODO */int number_of_units;
+  /* STUDENT TODO */std::string quarter;
 };
 
 /**
@@ -46,56 +47,74 @@ struct Course {
 #include "utils.cpp"
 
 /**
- * This function should populate the `courses` vector with structs of type
- * `Course`. We want to create these structs with the records in the courses.csv
- * file, where each line is a record!
+ * 这个函数应该用 `Course` 类型的结构体填充 `courses` 向量。我们希望用 courses.csv 文件中的记录来创建这些结构体，其中每一行都是一条记录！
  *
- * Hints:
- * 1) Take a look at the split function we provide in utils.cpp
- * 2) Each LINE is a record! *this is important, so we're saying it again :>)*
- * 3) The first line in the CSV defines the column names, so you can ignore it!
+ * 提示：
+ * 1) 看看我们在 utils.cpp 中提供的 split 函数
+ * 2) 每一行都是一条记录！*这很重要，所以我们再说一遍 :>)*
+ * 3) CSV 文件的第一行定义了列名，所以你可以忽略它！
  *
- * @param filename The name of the file to parse.
- * @param courses  A vector of courses to populate.
+ * @param filename 要解析的文件名。
+ * @param courses  要填充的课程向量。
  */
 void parse_csv(std::string filename, std::vector<Course> courses) {
-  /* (STUDENT TODO) Your code goes here... */
+  // 创建文件流
+  std::ifstream ifs(filename);
+  std::string course;
+  std::string first_line;
+  // 获取标题行
+  getline(ifs, first_line);
+  // 临时存储分词后的数据
+  std::vector<std::string> c;
+  // 用于类型转换
+  std::stringstream ss;
+  int num;
+
+  while(getline(ifs, course)) {
+    c = split(course, ',');
+    Course cou; //临时结构体
+    cou.title = c[0];
+    ss << c[1];
+    ss >> num;
+    cou.number_of_units = num;
+    cou.quarter = c[2];
+    courses.push_back(cou);
+    // std::cout << c[0] << c[1] << c[2];
+  }
+
 }
 
 /**
- * This function has TWO requirements.
+ * 这个函数有两个要求。
  *
- * 1) Write the courses that are offered to the file
- * "student_output/courses_offered.csv"
+ * 1) 将提供的课程写入文件 "student_output/courses_offered.csv"
  *
- * 2) Delete the courses that are offered from the `all_courses` vector.
- * IMPORTANT: do this after you write out to the file!
+ * 2) 从 `all_courses` 向量中删除提供的课程。
+ * 重要提示：在写入文件后执行此操作！
  *
- * HINTS:
- * 1) Keep track of the classes that you need to delete!
- * 2) Use the delete_elem_from_vector function we give you!
- * 3) Remember to write the CSV column headers at the beginning of the output!
- *    See courses.csv for reference.
+ * 提示：
+ * 1) 记录需要删除的课程！
+ * 2) 使用我们提供的 delete_elem_from_vector 函数！
+ * 3) 记得在输出的 CSV 文件开头写入列标题！
+ *    参考 courses.csv 文件。
  *
- * @param all_courses A vector of all courses gotten by calling `parse_csv`.
- *                    This vector will be modified by removing all offered courses.
+ * @param all_courses 通过调用 `parse_csv` 获得的所有课程的向量。
+ *                    这个向量将通过删除所有提供的课程进行修改。
  */
 void write_courses_offered(std::vector<Course> all_courses) {
   /* (STUDENT TODO) Your code goes here... */
+
 }
 
 /**
- * This function writes the courses NOT offered to the file
- * "student_output/courses_not_offered.csv".
+ * 这个函数将未提供的课程写入文件 "student_output/courses_not_offered.csv"。
  *
- * This function is ALWAYS called after the `write_courses_offered` function.
- * `unlisted_courses` will trivially contain classes that are not offered
- * since you delete offered classes from `all_courses` in the
- * `write_courses_offered` function.
+ * 这个函数总是在 `write_courses_offered` 函数之后调用。
+ * `unlisted_courses` 将显然包含未提供的课程，因为你在 `write_courses_offered` 函数中删除了提供的课程。
  *
- * HINT: This should be VERY similar to `write_courses_offered`
+ * 提示：这应该与 `write_courses_offered` 非常相似。
  *
- * @param unlisted_courses A vector of courses that are not offered.
+ * @param unlisted_courses 一个包含未提供课程的向量。
  */
 void write_courses_not_offered(std::vector<Course> unlisted_courses) {
   /* (STUDENT TODO) Your code goes here... */
@@ -106,7 +125,7 @@ int main() {
   static_assert(is_valid_course<Course>, "Course struct is not correctly defined!");
 
   std::vector<Course> courses;
-  parse_csv("courses.csv", courses);
+  parse_csv("assign1/courses.csv", courses);
 
   /* Uncomment for debugging... */
   // print_courses(courses);
