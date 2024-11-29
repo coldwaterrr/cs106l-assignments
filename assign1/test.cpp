@@ -45,7 +45,7 @@ void parse_csv(std::string filename, std::vector<Course> &courses) {
 
 
 int main() {
-    std::string filename = "assign1/courses.csv";
+    std::string filename = "courses.csv";
     std::vector<Course> courses;
     parse_csv(filename, courses);
     for (auto& line : courses) {

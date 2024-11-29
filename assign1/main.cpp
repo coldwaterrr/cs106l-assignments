@@ -18,6 +18,7 @@
 
 const std::string COURSES_OFFERED_PATH = "student_output/courses_offered.csv";
 const std::string COURSES_NOT_OFFERED_PATH = "student_output/courses_not_offered.csv";
+const std::string n = "null";
 
 /**
  * Represents a course a student can take in ExploreCourses.
@@ -27,7 +28,7 @@ const std::string COURSES_NOT_OFFERED_PATH = "student_output/courses_not_offered
  */
 struct Course {
   /* STUDENT TODO */std::string title;
-  /* STUDENT TODO */int number_of_units;
+  /* STUDENT TODO */std::string number_of_units;
   /* STUDENT TODO */std::string quarter;
 };
 
@@ -57,7 +58,7 @@ struct Course {
  * @param filename 要解析的文件名。
  * @param courses  要填充的课程向量。
  */
-void parse_csv(std::string filename, std::vector<Course> courses) {
+void parse_csv(std::string filename, std::vector<Course> &courses) {
   // 创建文件流
   std::ifstream ifs(filename);
   std::string course;
@@ -66,17 +67,18 @@ void parse_csv(std::string filename, std::vector<Course> courses) {
   getline(ifs, first_line);
   // 临时存储分词后的数据
   std::vector<std::string> c;
-  // 用于类型转换
-  std::stringstream ss;
-  int num;
+
+  // // 用于类型转换
+  // std::stringstream ss;
+  // int num;
 
   while(getline(ifs, course)) {
     c = split(course, ',');
     Course cou; //临时结构体
     cou.title = c[0];
-    ss << c[1];
-    ss >> num;
-    cou.number_of_units = num;
+    // ss << c[1];
+    // ss >> num;
+    cou.number_of_units = c[1];
     cou.quarter = c[2];
     courses.push_back(cou);
     // std::cout << c[0] << c[1] << c[2];
@@ -101,9 +103,45 @@ void parse_csv(std::string filename, std::vector<Course> courses) {
  * @param all_courses 通过调用 `parse_csv` 获得的所有课程的向量。
  *                    这个向量将通过删除所有提供的课程进行修改。
  */
-void write_courses_offered(std::vector<Course> all_courses) {
-  /* (STUDENT TODO) Your code goes here... */
+void write_courses_offered(std::vector<Course> &all_courses) {
 
+  //创建输入文件流
+  std::string filename = "courses.csv";
+  std::ifstream ifs(filename);
+  std::string first_line;
+  //获取标题行
+  getline(ifs, first_line);
+  ifs.close();
+
+  // std::vector<Course> courses;
+  // parse_csv(filename, courses);
+  std::vector<Course> course_null;
+
+
+  for (auto line : all_courses) {
+      if(line.quarter == n) {
+        course_null.push_back(line);
+      }
+    }
+  
+  for (auto line : course_null) {
+    delete_elem_from_vector(all_courses, line);
+  }
+
+  //创建输出文件流
+  std::ofstream ofs(COURSES_OFFERED_PATH);
+  if (ofs.is_open()) {
+    ofs << first_line << '\n';
+    for (auto line : all_courses) {
+      ofs << line.title << ',' << line.number_of_units << ',' << line.quarter << '\n';
+    }
+  }
+
+  all_courses = course_null;
+  
+  ofs.close();
+
+  
 }
 
 /**
@@ -117,7 +155,27 @@ void write_courses_offered(std::vector<Course> all_courses) {
  * @param unlisted_courses 一个包含未提供课程的向量。
  */
 void write_courses_not_offered(std::vector<Course> unlisted_courses) {
-  /* (STUDENT TODO) Your code goes here... */
+
+  //创建输入文件流
+  std::string filename = "courses.csv";
+  std::ifstream ifs(filename);
+  std::string first_line;
+  //获取标题行
+  getline(ifs, first_line);
+
+  ifs.close();
+
+  //创建输出文件流
+  std::ofstream ofs(COURSES_NOT_OFFERED_PATH);
+  if (ofs.is_open()) {
+    ofs << first_line << '\n';
+    for (auto line : unlisted_courses) {
+      ofs << line.title << ',' << line.number_of_units << ',' << line.quarter << '\n';
+    }
+  }
+
+  ofs.close();
+
 }
 
 int main() {
@@ -125,12 +183,15 @@ int main() {
   static_assert(is_valid_course<Course>, "Course struct is not correctly defined!");
 
   std::vector<Course> courses;
-  parse_csv("assign1/courses.csv", courses);
+  parse_csv("courses.csv", courses);
 
   /* Uncomment for debugging... */
   // print_courses(courses);
 
   write_courses_offered(courses);
+  
+  // print_courses(courses);
+
   write_courses_not_offered(courses);
 
   return run_autograder();

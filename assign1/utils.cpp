@@ -39,6 +39,7 @@ std::vector<std::string> split(const std::string& s, char delim) {
  */
 void delete_elem_from_vector(std::vector<Course>& v, const Course& elem) {
   std::vector<Course>::iterator it = std::find(v.begin(), v.end(), elem);
+  // std::cout <<"删除成功 " << it->quarter <<'\n';
   v.erase(it);
 }
 
